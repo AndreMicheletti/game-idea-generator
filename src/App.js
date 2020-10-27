@@ -6,9 +6,11 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Selector from './components/Selector';
+import GameIdea from './components/GameIdea';
 
 const GENRES = [
   {value: "tactics strategy", name: "tactics strategy"},
@@ -88,11 +90,15 @@ const useStyles = makeStyles((theme) => ({
       theme.palette.type === 'light' ? theme.palette.grey[200] : theme.palette.grey[800],
   },
 }));
+
+
 export default function App() {
   const classes = useStyles();
+
   const [genre, setGenre] = React.useState('');
   const [mechanic, setMechanic] = React.useState('');
   const [theme, setTheme] = React.useState('');
+  const [generated, setGenerated] = React.useState(Object.new);
 
   const handleGenre = (event) => {
     setGenre(event.target.value);
@@ -105,10 +111,26 @@ export default function App() {
   };
 
   const onGenerate = () => {
+    setGenerated({
+      genres: [genre],
+      mechanics: [mechanic],
+      themes: [theme],
+    });
+  };
+
+  const onRandomize = () => {
     setGenre(GENRES[Math.floor(Math.random() * GENRES.length)].value);
     setMechanic(MECHANICS[Math.floor(Math.random() * MECHANICS.length)].value);
     setTheme(THEMES[Math.floor(Math.random() * THEMES.length)].value);
-  };
+    onGenerate();
+  }
+
+  const renderGenerated = () => {
+    if (!generated)
+      return null;
+
+    return (<GameIdea data={generated} />);
+  }
 
   return (
     <div className={classes.root}>
@@ -123,6 +145,8 @@ export default function App() {
 
       <main>
         <Container component="main" className={classes.main} maxWidth="md">
+          {renderGenerated()}
+
           <Box my={4}>
             <center>
               <Selector name="Themes" options={THEMES} handleChange={handleTheme} selected={theme} />
@@ -135,9 +159,14 @@ export default function App() {
 
           <Box my={4}>
             <center>
-              <Button variant="contained" color="primary" onClick={onGenerate}>
-                Generate
-              </Button>
+              <ButtonGroup size="large" color="primary" aria-label="large outlined primary button group">
+                <Button variant="contained" color="primary" onClick={onGenerate}>
+                  Generate
+                </Button>
+                <Button variant="contained" color="primary" onClick={onRandomize}>
+                  Randomize
+                </Button>
+              </ButtonGroup>
             </center>
           </Box>
 
