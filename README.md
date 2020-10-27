@@ -1,25 +1,16 @@
-# Create React App example
+# Game idea Generator
 
-## How to use
+A `Vue.js` app to randomly select words to create game ideas.
 
-Download the example [or clone the repo](https://github.com/mui-org/material-ui):
+### Features
 
-```sh
-curl https://codeload.github.com/mui-org/material-ui/tar.gz/master | tar -xz --strip=2 material-ui-master/examples/create-react-app
-cd create-react-app
-```
+Select between three categories: Game genres, Game Mechanics and Game Themes,
 
-Install it and run:
+Or click the button to randomize it!
 
-```sh
-npm install
-npm start
-```
+### How to run (development)
 
-or:
-
-[![Edit on CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/mui-org/material-ui/tree/master/examples/create-react-app)
-
-## The idea behind the example
-
-This example demonstrates how you can use [Create React App](https://github.com/facebookincubator/create-react-app).
+ - Clone the repo
+ - run `npm install`
+ - run `npm start`
+ 
