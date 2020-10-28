@@ -1,64 +1,26 @@
-import React, { useEffect } from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import Link from '@material-ui/core/Link';
-import Button from '@material-ui/core/Button';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
-import { makeStyles } from '@material-ui/core/styles';
+import React from 'react'
+import { makeStyles } from '@material-ui/core/styles'
 
-import Selector from './components/Selector';
-import GameIdea from './components/GameIdea';
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import Container from '@material-ui/core/Container'
+import Typography from '@material-ui/core/Typography'
+import Box from '@material-ui/core/Box'
+import Link from '@material-ui/core/Link'
+import Button from '@material-ui/core/Button'
+import Slider from '@material-ui/core/Slider'
+import Tooltip from '@material-ui/core/Tooltip'
 
-const GENRES = [
-  {value: "tactics strategy", name: "tactics strategy"},
-  {value: "real time strategy", name: "real time strategy"},
-  {value: "platformer", name: "platformer"},
-  {value: "rogue-like", name: "rogue-like"},
-  {value: "mmo rpg", name: "mmo rpg"},
-  {value: "rpg", name: "rpg"},
-  {value: "shoot em up", name: "shoot'em up"},
-  {value: "racing", name: "racing"},
-  {value: "first person shooter", name: "first person shooter"},
-  {value: "arcade", name: "arcade"},
-  {value: "street fighter", name: "street fighter"},
-]
+import Card from '@material-ui/core/Card'
+import CardHeader from '@material-ui/core/CardHeader'
+import CardContent from '@material-ui/core/CardContent'
+import CardActions from '@material-ui/core/CardActions'
 
-const MECHANICS = [
-  {value: "duel", name: "duel"},
-  {value: "card game", name: "card game"},
-  {value: "steal the flag", name: "steal the flag"},
-  {value: "tower defense", name: "tower defense"},
-  {value: "survive to the end", name: "survive to the end"},
-  {value: "find all items", name: "find all items"},
-  {value: "with timer", name: "with timer"},
-  {value: "build structures", name: "build structures"},
-  {value: "build your player", name: "build your player"},
-  {value: "sandbox", name: "sandbox"},
-  {value: "procedural generated", name: "procedural generated"},
-  {value: "investigation", name: "investigation"},
-  {value: "manage your shop", name: "manage your shop"},
-  {value: "manage your vehicle", name: "manage your vehicle"},
-  {value: "must co-op", name: "must co-op"},
-]
+import IconButton from '@material-ui/core/IconButton'
+import ShareIcon from '@material-ui/icons/Share'
 
-const THEMES = [
-  {value: "medieval", name: "medieval"},
-  {value: "fantasy", name: "fantasy"},
-  {value: "non sense", name: "non sense"},
-  {value: "japanese", name: "japanese"},
-  {value: "hi-tech", name: "hi-tech"},
-  {value: "modern", name: "modern"},
-  {value: "abstract", name: "abstract"},
-  {value: "steampunk", name: "steampunk"},
-  {value: "cyberpunk", name: "cyberpunk"},
-  {value: "egypt", name: "egypt"},
-  {value: "arabic", name: "arabic"},
-  {value: "vintage", name: "vintage"},
-  {value: "dark fantasy", name: "dark fantasy"},
-]
+import RandomTag from './components/RandomTag'
+import * as data from './data'
 
 function Copyright() {
   return (
@@ -70,7 +32,7 @@ function Copyright() {
       {new Date().getFullYear()}
       {'.'}
     </Typography>
-  );
+  )
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -89,49 +51,109 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor:
       theme.palette.type === 'light' ? theme.palette.grey[200] : theme.palette.grey[800],
   },
-}));
+  card: {
+    backgroundColor: "#333",
+    padding: 30,
+    paddingTop: 15,
+    paddingBottom: 15,
+  },
+  formBox: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+  dataLine: {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  slider: {
+    width: 200,
+  }
+}))
 
 
 export default function App() {
-  const classes = useStyles();
+  const classes = useStyles()
 
-  const [genre, setGenre] = React.useState('');
-  const [mechanic, setMechanic] = React.useState('');
-  const [theme, setTheme] = React.useState('');
-  const [generated, setGenerated] = React.useState(Object.new);
+  const [genres, setGenre] = React.useState([
+    data.getRandomGenre()
+  ])
+  const [mechanics, setMechanic] = React.useState([
+    data.getRandomMechanic()
+  ])
+  const [themes, setTheme] = React.useState([
+    data.getRandomTheme()
+  ])
 
-  const handleGenre = (event) => {
-    setGenre(event.target.value);
-    updGenerated(event.target.value, mechanic, theme);
-  };
-  const handleMechanic = (event) => {
-    setMechanic(event.target.value);
-    updGenerated(genre, event.target.value, theme);
-  };
-  const handleTheme = (event) => {
-    setTheme(event.target.value);
-    updGenerated(genre, mechanic, event.target.value);
-  };
+  const updArrayOnIndex = (arr, index, value) => {
+    const aux = [...arr]
+    aux[index] = value
+    return [...aux]
+  }
 
-  const updGenerated = (_genre, _mechanic, _theme) => {
-    setGenerated({
-      genres: [_genre],
-      mechanics: [_mechanic],
-      themes: [_theme],
-    });
+  const updArraySize = (arr, newSize, newDataCallback) => {
+    const aux = [...arr]
+    if (aux.length > newSize) {
+      // remove item
+      return aux.slice(0, newSize)
+    } else {
+      // add items
+      [...Array(newSize - aux.length).keys()].forEach(index => {
+        aux.push(newDataCallback())
+      })
+    }
+    return [...aux]
   }
 
   const onRandomize = () => {
-    const randomGenre = GENRES[Math.floor(Math.random() * GENRES.length)].value
-    const randomMechanic = MECHANICS[Math.floor(Math.random() * MECHANICS.length)].value
-    const randomTheme = THEMES[Math.floor(Math.random() * THEMES.length)].value
-    setGenre(randomGenre);
-    setMechanic(randomMechanic);
-    setTheme(randomTheme);
-    updGenerated(randomGenre, randomMechanic, randomTheme);
+    setGenre(genres.map(_ => data.getRandomGenre()))
+    setTheme(themes.map(_ => data.getRandomTheme()))
+    setMechanic(mechanics.map(_ => data.getRandomMechanic()))
   }
 
-  useEffect(() => onRandomize(), []);
+  const renderGenreTags = () => {
+    return genres.map((genre, index) => {
+      return (
+        <RandomTag
+          key={`genre-${index}`}
+          text={genre}
+          color="#e66d52"
+          tooltip="Genre"
+          onClick={() => { setGenre(updArrayOnIndex(genres, index, data.getRandomGenre()))}}
+        />
+      )
+    })
+  }
+
+  const renderMechanicTags = () => {
+    return mechanics.map((mech, index) => {
+      return (
+        <RandomTag
+          key={`mech-${index}`}
+          text={mech}
+          color="#3b28da"
+          tooltip="Mechanic"
+          onClick={() => { setMechanic(updArrayOnIndex(mechanics, index, data.getRandomMechanic()))}}
+        />
+      )
+    })
+  }
+
+  const renderThemeTags = () => {
+    return themes.map((theme, index) => {
+      return (
+        <RandomTag
+          key={`theme-${index}`}
+          text={theme}
+          color="#087b08"
+          tooltip="Theme"
+          onClick={() => { setTheme(updArrayOnIndex(themes, index, data.getRandomTheme()))}}
+        />
+      )
+    })
+  }
 
   return (
     <div className={classes.root}>
@@ -146,25 +168,62 @@ export default function App() {
 
       <main>
         <Container component="main" className={classes.main} maxWidth="md">
-          {!!generated && !!generated.genres ? <GameIdea data={generated}/> : null}
 
-          <Box my={4}>
-            <center>
-              <Selector name="Themes" options={THEMES} handleChange={handleTheme} selected={theme} />
-              +
-              <Selector name="Mechanics" options={MECHANICS} handleChange={handleMechanic} selected={mechanic} />
-              +
-              <Selector name="Genres" options={GENRES} handleChange={handleGenre} selected={genre} />
-            </center>
+          <Box my={4} className={classes.formBox}>
+            <div>
+              <Typography id="discrete-slider" gutterBottom>
+                How many Mechanics?
+              </Typography>
+              <Slider
+                className={classes.slider}
+                defaultValue={1}
+                getAriaValueText={0}
+                aria-labelledby="discrete-slider"
+                valueLabelDisplay="auto"
+                step={1} marks
+                min={1}
+                max={3}
+                onChangeCommitted={(_, value) => setMechanic(updArraySize(mechanics, value, data.getRandomMechanic))}
+              />
+            </div>
+            <Button variant="contained" color="primary" onClick={() => onRandomize()}>
+              Randomize
+            </Button>
           </Box>
 
-          <Box my={4}>
-            <center>
-              <Button variant="contained" color="primary" onClick={() => onRandomize()}>
-                Randomize
-              </Button>
-            </center>
-          </Box>
+
+          <Card className={classes.card}>
+            <CardHeader
+              title={(
+                <Typography variant="h4" style={{ color: 'white' }}>
+                  What about a
+                </Typography>
+              )}
+            />
+            <CardContent>
+              <div className={classes.dataLine}>
+                {renderThemeTags()}
+                {renderMechanicTags()}
+                {renderGenreTags()}
+              </div>
+            </CardContent>
+            <CardActions>
+              <Tooltip title="Share" aria-label="share">
+                <IconButton aria-label="share" color="primary">
+                  <ShareIcon />
+                </IconButton>
+              </Tooltip>
+            </CardActions>
+          </Card>
+
+          <Container maxWidth="sm">
+            <Typography variant="h4">
+              How to use?
+            </Typography>
+            <Typography variant="body1">
+              <p></p>
+            </Typography>
+          </Container>
 
         </Container>
       </main>
@@ -177,5 +236,5 @@ export default function App() {
       </footer>
 
     </div>
-  );
+  )
 }
