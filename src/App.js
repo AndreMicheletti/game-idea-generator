@@ -20,7 +20,7 @@ const GENRES = [
   {value: "mmo rpg", name: "mmo rpg"},
   {value: "rpg", name: "rpg"},
   {value: "shoot em up", name: "shoot'em up"},
-  {value: "race", name: "race"},
+  {value: "racing", name: "racing"},
   {value: "first person shooter", name: "first person shooter"},
   {value: "arcade", name: "arcade"},
   {value: "street fighter", name: "street fighter"},
@@ -99,6 +99,7 @@ export default function App() {
   const [mechanic, setMechanic] = React.useState('');
   const [theme, setTheme] = React.useState('');
   const [generated, setGenerated] = React.useState(Object.new);
+  const [show, setShowing] = React.useState(false)
 
   const handleGenre = (event) => {
     setGenre(event.target.value);
@@ -110,26 +111,25 @@ export default function App() {
     setTheme(event.target.value);
   };
 
-  const onGenerate = () => {
-    setGenerated({
-      genres: [genre],
-      mechanics: [mechanic],
-      themes: [theme],
-    });
+  const onGenerate = (_genre, _mechanic, _theme) => {
+    if (!!_genre && !!_mechanic && !!_theme) {
+      setGenerated({
+        genres: [_genre],
+        mechanics: [_mechanic, "must co-op"],
+        themes: [_theme],
+      });
+      setShowing(true)
+    }
   };
 
   const onRandomize = () => {
-    setGenre(GENRES[Math.floor(Math.random() * GENRES.length)].value);
-    setMechanic(MECHANICS[Math.floor(Math.random() * MECHANICS.length)].value);
-    setTheme(THEMES[Math.floor(Math.random() * THEMES.length)].value);
-    onGenerate();
-  }
-
-  const renderGenerated = () => {
-    if (!generated)
-      return null;
-
-    return (<GameIdea data={generated} />);
+    const randomGenre = GENRES[Math.floor(Math.random() * GENRES.length)].value
+    const randomMechanic = MECHANICS[Math.floor(Math.random() * MECHANICS.length)].value
+    const randomTheme = THEMES[Math.floor(Math.random() * THEMES.length)].value
+    setGenre(randomGenre);
+    setMechanic(randomMechanic);
+    setTheme(randomTheme);
+    onGenerate(randomGenre, randomMechanic, randomTheme);
   }
 
   return (
@@ -145,7 +145,7 @@ export default function App() {
 
       <main>
         <Container component="main" className={classes.main} maxWidth="md">
-          {renderGenerated()}
+          {show ? <GameIdea data={generated} /> : null}
 
           <Box my={4}>
             <center>
@@ -160,10 +160,10 @@ export default function App() {
           <Box my={4}>
             <center>
               <ButtonGroup size="large" color="primary" aria-label="large outlined primary button group">
-                <Button variant="contained" color="primary" onClick={onGenerate}>
+                <Button variant="contained" color="primary" onClick={() => onGenerate(genre, mechanic, theme)}>
                   Generate
                 </Button>
-                <Button variant="contained" color="primary" onClick={onRandomize}>
+                <Button variant="contained" color="primary" onClick={() => onRandomize()}>
                   Randomize
                 </Button>
               </ButtonGroup>
