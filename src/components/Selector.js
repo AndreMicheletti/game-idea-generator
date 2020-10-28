@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 function renderItems (itemList) {
   return itemList.map((item) => {
     return (
-      <MenuItem value={item.value}>{item.name}</MenuItem>
+      <MenuItem key={item.value} value={item.value}>{item.name}</MenuItem>
     );
   });
 }

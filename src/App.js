@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Container from '@material-ui/core/Container';
@@ -99,28 +99,27 @@ export default function App() {
   const [mechanic, setMechanic] = React.useState('');
   const [theme, setTheme] = React.useState('');
   const [generated, setGenerated] = React.useState(Object.new);
-  const [show, setShowing] = React.useState(false)
 
   const handleGenre = (event) => {
     setGenre(event.target.value);
+    updGenerated(event.target.value, mechanic, theme);
   };
   const handleMechanic = (event) => {
     setMechanic(event.target.value);
+    updGenerated(genre, event.target.value, theme);
   };
   const handleTheme = (event) => {
     setTheme(event.target.value);
+    updGenerated(genre, mechanic, event.target.value);
   };
 
-  const onGenerate = (_genre, _mechanic, _theme) => {
-    if (!!_genre && !!_mechanic && !!_theme) {
-      setGenerated({
-        genres: [_genre],
-        mechanics: [_mechanic, "must co-op"],
-        themes: [_theme],
-      });
-      setShowing(true)
-    }
-  };
+  const updGenerated = (_genre, _mechanic, _theme) => {
+    setGenerated({
+      genres: [_genre],
+      mechanics: [_mechanic],
+      themes: [_theme],
+    });
+  }
 
   const onRandomize = () => {
     const randomGenre = GENRES[Math.floor(Math.random() * GENRES.length)].value
@@ -129,15 +128,17 @@ export default function App() {
     setGenre(randomGenre);
     setMechanic(randomMechanic);
     setTheme(randomTheme);
-    onGenerate(randomGenre, randomMechanic, randomTheme);
+    updGenerated(randomGenre, randomMechanic, randomTheme);
   }
+
+  useEffect(() => onRandomize(), []);
 
   return (
     <div className={classes.root}>
 
       <AppBar position="relative">
         <Toolbar>
-          <Typography variant="h6" color="inherit" noWrap>
+          <Typography variant="h4" color="inherit" noWrap>
             Game Idea Generator
           </Typography>
         </Toolbar>
@@ -145,7 +146,7 @@ export default function App() {
 
       <main>
         <Container component="main" className={classes.main} maxWidth="md">
-          {show ? <GameIdea data={generated} /> : null}
+          {!!generated && !!generated.genres ? <GameIdea data={generated}/> : null}
 
           <Box my={4}>
             <center>
@@ -159,14 +160,9 @@ export default function App() {
 
           <Box my={4}>
             <center>
-              <ButtonGroup size="large" color="primary" aria-label="large outlined primary button group">
-                <Button variant="contained" color="primary" onClick={() => onGenerate(genre, mechanic, theme)}>
-                  Generate
-                </Button>
-                <Button variant="contained" color="primary" onClick={() => onRandomize()}>
-                  Randomize
-                </Button>
-              </ButtonGroup>
+              <Button variant="contained" color="primary" onClick={() => onRandomize()}>
+                Randomize
+              </Button>
             </center>
           </Box>
 
