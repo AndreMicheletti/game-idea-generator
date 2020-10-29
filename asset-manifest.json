@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.js": "/game-idea-generator/static/js/main.349974dc.chunk.js",
+    "main.js.map": "/game-idea-generator/static/js/main.349974dc.chunk.js.map",
+    "runtime-main.js": "/game-idea-generator/static/js/runtime-main.91dd6ba9.js",
+    "runtime-main.js.map": "/game-idea-generator/static/js/runtime-main.91dd6ba9.js.map",
+    "static/js/2.b4968e83.chunk.js": "/game-idea-generator/static/js/2.b4968e83.chunk.js",
+    "static/js/2.b4968e83.chunk.js.map": "/game-idea-generator/static/js/2.b4968e83.chunk.js.map",
+    "index.html": "/game-idea-generator/index.html",
+    "static/js/2.b4968e83.chunk.js.LICENSE.txt": "/game-idea-generator/static/js/2.b4968e83.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.91dd6ba9.js",
+    "static/js/2.b4968e83.chunk.js",
+    "static/js/main.349974dc.chunk.js"
+  ]
+}
