@@ -1,57 +1,69 @@
 
 const GENRES = [
-  {value: "tactics strategy", name: "tactics strategy"},
-  {value: "real time strategy", name: "real time strategy"},
-  {value: "platformer", name: "platformer"},
-  {value: "rogue-like", name: "rogue-like"},
-  {value: "mmo rpg", name: "mmo rpg"},
-  {value: "rpg", name: "rpg"},
-  {value: "shoot em up", name: "shoot'em up"},
-  {value: "racing", name: "racing"},
-  {value: "first person shooter", name: "first person shooter"},
-  {value: "arcade", name: "arcade"},
-  {value: "street fighter", name: "street fighter"},
+  "tactics strategy",
+  "real time strategy",
+  "platformer",
+  "rogue-like",
+  "mmo rpg",
+  "rpg",
+  "shoot em up",
+  "racing",
+  "first person shooter",
+  "arcade",
+  "street fighter",
 ]
 
 const MECHANICS = [
-  {value: "duel", name: "duel"},
-  {value: "card game", name: "card game"},
-  {value: "steal the flag", name: "steal the flag"},
-  {value: "tower defense", name: "tower defense"},
-  {value: "survive to the end", name: "survive to the end"},
-  {value: "find all items", name: "find all items"},
-  {value: "with timer", name: "with timer"},
-  {value: "build structures", name: "build structures"},
-  {value: "build your player", name: "build your player"},
-  {value: "sandbox", name: "sandbox"},
-  {value: "procedural generated", name: "procedural generated"},
-  {value: "investigation", name: "investigation"},
-  {value: "manage your shop", name: "manage your shop"},
-  {value: "manage your vehicle", name: "manage your vehicle"},
-  {value: "must co-op", name: "must co-op"},
+  "duel",
+  "card game",
+  "steal the flag",
+  "tower defense",
+  "survive to the end",
+  "find all items",
+  "with timer",
+  "build structures",
+  "build your player",
+  "sandbox",
+  "procedural generated",
+  "investigation",
+  "manage your shop",
+  "manage your vehicle",
+  "must co-op",
 ]
 
 const THEMES = [
-  {value: "medieval", name: "medieval"},
-  {value: "fantasy", name: "fantasy"},
-  {value: "non sense", name: "non sense"},
-  {value: "japanese", name: "japanese"},
-  {value: "hi-tech", name: "hi-tech"},
-  {value: "modern", name: "modern"},
-  {value: "abstract", name: "abstract"},
-  {value: "steampunk", name: "steampunk"},
-  {value: "cyberpunk", name: "cyberpunk"},
-  {value: "egypt", name: "egypt"},
-  {value: "vintage", name: "vintage"},
-  {value: "dark fantasy", name: "dark fantasy"},
+  "medieval",
+  "fantasy",
+  "non sense",
+  "japanese",
+  "hi-tech",
+  "modern",
+  "abstract",
+  "steampunk",
+  "cyberpunk",
+  "egypt",
+  "vintage",
+  "dark fantasy",
 ]
 
+export const getGenre = (i) => GENRES[i]
+export const getMechanic = (i) => MECHANICS[i]
+export const getTheme = (i) => THEMES[i]
+
 export const getRandomGenre = () => {
-  return GENRES[Math.floor(Math.random() * GENRES.length)].value
+  return GENRES[Math.floor(Math.random() * GENRES.length)]
 }
 export const getRandomMechanic = () => {
-  return MECHANICS[Math.floor(Math.random() * MECHANICS.length)].value
+  return MECHANICS[Math.floor(Math.random() * MECHANICS.length)]
 }
 export const getRandomTheme = () => {
-  return THEMES[Math.floor(Math.random() * THEMES.length)].value
+  return THEMES[Math.floor(Math.random() * THEMES.length)]
+}
+
+export const buildUrl = (genres, themes, mechanics, sliderValue) => {
+  const genreIndexes = genres.map(value => GENRES.indexOf(value))
+  const mechIndexes = mechanics.map(value => MECHANICS.indexOf(value))
+  const themeIndexes = themes.map(value => THEMES.indexOf(value))
+  const gString = themeIndexes.concat(mechIndexes).concat(genreIndexes).join('.')
+  return `?g=${gString}&m=${sliderValue}`
 }

@@ -12,9 +12,11 @@
     "@material-ui/core": "latest",
     "@material-ui/icons": "^4.9.1",
     "clsx": "latest",
+    "query-string": "^6.13.6",
     "react": "latest",
     "react-dom": "latest",
-    "react-scripts": "latest"
+    "react-scripts": "latest",
+    "react-share": "^4.3.1"
   },
   "browserslist": {
     "production": [

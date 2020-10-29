@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 
 import AppBar from '@material-ui/core/AppBar'
@@ -16,12 +16,35 @@ import CardHeader from '@material-ui/core/CardHeader'
 import CardContent from '@material-ui/core/CardContent'
 import CardActions from '@material-ui/core/CardActions'
 
+import Dialog from '@material-ui/core/Dialog'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogActions from '@material-ui/core/DialogActions'
+
 import IconButton from '@material-ui/core/IconButton'
 import ShareIcon from '@material-ui/icons/Share'
 import FavoriteIcon from '@material-ui/icons/Favorite'
+import CloseIcon from '@material-ui/icons/Close'
+
+import {
+  EmailShareButton,
+  EmailIcon,
+  RedditShareButton,
+  RedditIcon,
+  FacebookShareButton,
+  FacebookIcon,
+  WhatsappShareButton,
+  WhatsappIcon,
+  TelegramShareButton,
+  TelegramIcon,
+  TwitterShareButton,
+  TwitterIcon
+} from "react-share";
 
 import RandomTag from './components/RandomTag'
 import * as data from './data'
+
+import queryString from 'query-string'
 
 function Copyright() {
   return (
@@ -82,13 +105,30 @@ const useStyles = makeStyles((theme) => ({
     width: 200,
   },
   theme: {
-    color: '#087b08'
+    color: '#087b08',
+    fontWeight: 500
   },
   genre: {
-    color: '#e66d52'
+    color: '#e66d52',
+    fontWeight: 500
   },
   mechanic: {
-    color: '#3b28da'
+    color: '#3b28da',
+    fontWeight: 500
+  },
+  dialogRoot: {
+    margin: 0,
+    padding: theme.spacing(2),
+  },
+  dialogCloseButton: {
+    position: 'absolute',
+    right: theme.spacing(1),
+    top: theme.spacing(1),
+    color: theme.palette.grey[500],
+  },
+  dialogTextBox: {
+    padding: 8,
+    backgroundColor: '#e8e8e8'
   }
 }))
 
@@ -96,15 +136,18 @@ const useStyles = makeStyles((theme) => ({
 export default function App() {
   const classes = useStyles()
 
-  const [genres, setGenre] = React.useState([
-    data.getRandomGenre()
-  ])
-  const [mechanics, setMechanic] = React.useState([
-    data.getRandomMechanic()
-  ])
-  const [themes, setTheme] = React.useState([
-    data.getRandomTheme()
-  ])
+  const [genres, setGenre] = React.useState([ data.getRandomGenre() ])
+  const [mechanics, setMechanic] = React.useState([ data.getRandomMechanic() ])
+  const [themes, setTheme] = React.useState([ data.getRandomTheme() ])
+  const [mechSlider, setSlider] = React.useState(1)
+  const [openDialog, setOpen] = React.useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const updArrayOnIndex = (arr, index, value) => {
     const aux = [...arr]
@@ -131,6 +174,37 @@ export default function App() {
     setTheme(themes.map(_ => data.getRandomTheme()))
     setMechanic(mechanics.map(_ => data.getRandomMechanic()))
   }
+
+  const handleSlider = (value) => {
+    setSlider(value)
+    setMechanic(updArraySize(mechanics, value, data.getRandomMechanic))
+  }
+
+  useEffect(() => {
+    // check url querystring
+    try {
+      const parsed = queryString.parse(location.search)
+      if (parsed && parsed.g) {
+        const m = !!parsed.m ? parseInt(parsed.m) : 1
+        const indexes = parsed.g.split('.')
+        if (indexes.length !== 2 + m) {
+          throw 'Not enough parameters. malformed querystring'
+        }
+        const pThemes = indexes.slice(0, 1)
+        const pMechanics = indexes.slice(1, 1+m)
+        const pGenres = indexes.slice(1+m, 2+m)
+        setGenre(pGenres.map(i => data.getGenre(i)))
+        setMechanic(pMechanics.map(i => data.getMechanic(i)))
+        setTheme(pThemes.map(i => data.getTheme(i)))
+        setSlider(m)
+      }
+    } catch (e) {
+      console.warn(e)
+      setGenre([data.getRandomGenre()])
+      setMechanic([data.getRandomMechanic()])
+      setTheme([data.getRandomTheme()])
+    }
+  }, [])
 
   const renderGenreTags = () => {
     return genres.map((genre, index) => {
@@ -174,6 +248,10 @@ export default function App() {
     })
   }
 
+  const shareUrl = `http://google.com/${data.buildUrl(genres, themes, mechanics, mechSlider)}`
+  const shareTitle = 'Check out this game idea'
+  const shareMessage = "I've generated a random game idea using this simple tool, check it out!"
+
   return (
     <div className={classes.root}>
 
@@ -187,6 +265,42 @@ export default function App() {
         </Toolbar>
       </AppBar>
 
+      <Dialog open={openDialog}>
+        <DialogTitle className={classes.dialogRoot}>
+          <Typography component="p" variant="h5">Share</Typography>
+          <IconButton aria-label="close" className={classes.dialogCloseButton} onClick={handleClose}>
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
+        <DialogContent>
+          <div className={classes.dialogTextBox}>
+            <Typography variant="subtitle1" style={{ fontWeight: 'normal' }}>
+              {shareUrl}
+            </Typography>
+          </div>
+        </DialogContent>
+        <DialogActions>
+          <EmailShareButton url={shareUrl} title={shareTitle} body={shareMessage}>
+            <EmailIcon round />
+          </EmailShareButton>
+          <FacebookShareButton url={shareUrl} quote={shareMessage}>
+            <FacebookIcon round />
+          </FacebookShareButton>
+          <RedditShareButton url={shareUrl} title={shareMessage}>
+            <RedditIcon round />
+          </RedditShareButton>
+          <WhatsappShareButton url={shareUrl} title={shareMessage}>
+            <WhatsappIcon round />
+          </WhatsappShareButton>
+          <TelegramShareButton url={shareUrl} title={shareMessage}>
+            <TelegramIcon round />
+          </TelegramShareButton>
+          <TwitterShareButton url={shareUrl} title={shareMessage}>
+            <TwitterIcon round />
+          </TwitterShareButton>
+        </DialogActions>
+      </Dialog>
+
       <main>
         <Container component="main" className={classes.main} maxWidth="md">
 
@@ -198,13 +312,13 @@ export default function App() {
               <Slider
                 className={classes.slider}
                 defaultValue={1}
-                getAriaValueText={0}
+                value={mechSlider}
                 aria-labelledby="discrete-slider"
                 valueLabelDisplay="auto"
                 step={1} marks
                 min={1}
                 max={3}
-                onChangeCommitted={(_, value) => setMechanic(updArraySize(mechanics, value, data.getRandomMechanic))}
+                onChangeCommitted={(_, value) => { handleSlider(value)}}
               />
             </div>
             <Button variant="contained" color="primary" onClick={() => onRandomize()}>
@@ -230,7 +344,7 @@ export default function App() {
             </CardContent>
             <CardActions>
               <Tooltip title="Share" aria-label="share">
-                <IconButton aria-label="share" color="primary">
+                <IconButton aria-label="share" color="primary" onClick={() => handleOpen()}>
                   <ShareIcon />
                 </IconButton>
               </Tooltip>

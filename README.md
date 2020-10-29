@@ -1,6 +1,6 @@
 # Game idea Generator
 
-A `Vue.js` app to randomly select words to create game ideas.
+A `React` app to randomly select words to create game ideas.
 
 ### Features
 
