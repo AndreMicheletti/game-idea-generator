@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 
+import queryString from 'query-string'
+
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Container from '@material-ui/core/Container'
@@ -44,9 +46,9 @@ import {
 import RandomTag from './components/RandomTag'
 import * as data from './data'
 
-import queryString from 'query-string'
+import gamepadIcon from './images/gamepad_white.svg'
 
-const PUBLIC_URL = 'https://andremicheletti.github.io/game-idea-generator/'
+const PUBLIC_URL = ''
 
 function Copyright() {
   return (
@@ -251,7 +253,10 @@ export default function App() {
     })
   }
 
-  const shareUrl = `${PUBLIC_URL}${data.buildUrl(genres, themes, mechanics, mechSlider)}`
+  const protocol = 'https'
+  const githubName = 'andremicheletti'
+  const repoName = 'game-idea-generator'
+  const shareUrl = `${protocol}://${githubName}.github.io/${repoName}/${data.buildUrl(genres, themes, mechanics, mechSlider)}`
   const shareTitle = 'Check out this game idea'
   const shareMessage = "I've generated a random game idea using this simple tool, check it out!"
 
@@ -260,6 +265,7 @@ export default function App() {
 
       <AppBar position="relative">
         <Toolbar>
+          <img src={gamepadIcon} width="100" height="50" />
           <a href="/" style={{ textDecoration: 'none', color: 'inherit' }}>
             <Typography variant="h4" color="inherit" noWrap>
               Game Idea Generator
