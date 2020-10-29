@@ -46,6 +46,8 @@ import * as data from './data'
 
 import queryString from 'query-string'
 
+const PUBLIC_URL = 'https://andremicheletti.github.io/game-idea-generator/'
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary">
@@ -184,6 +186,7 @@ export default function App() {
     // check url querystring
     try {
       const parsed = queryString.parse(location.search)
+      console.log(parsed)
       if (parsed && parsed.g) {
         const m = !!parsed.m ? parseInt(parsed.m) : 1
         const indexes = parsed.g.split('.')
@@ -248,7 +251,7 @@ export default function App() {
     })
   }
 
-  const shareUrl = `http://google.com/${data.buildUrl(genres, themes, mechanics, mechSlider)}`
+  const shareUrl = `${PUBLIC_URL}${data.buildUrl(genres, themes, mechanics, mechSlider)}`
   const shareTitle = 'Check out this game idea'
   const shareMessage = "I've generated a random game idea using this simple tool, check it out!"
 
