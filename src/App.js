@@ -18,6 +18,7 @@ import CardActions from '@material-ui/core/CardActions'
 
 import IconButton from '@material-ui/core/IconButton'
 import ShareIcon from '@material-ui/icons/Share'
+import FavoriteIcon from '@material-ui/icons/Favorite'
 
 import RandomTag from './components/RandomTag'
 import * as data from './data'
@@ -26,8 +27,8 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary">
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+      <Link color="inherit" href="https://github.com/AndreMicheletti/game-idea-generator/blob/master/LICENSE">
+        André Micheletti
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -50,6 +51,12 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 'auto',
     backgroundColor:
       theme.palette.type === 'light' ? theme.palette.grey[200] : theme.palette.grey[800],
+  },
+  footerContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   card: {
     backgroundColor: "#333",
@@ -172,9 +179,11 @@ export default function App() {
 
       <AppBar position="relative">
         <Toolbar>
-          <Typography variant="h4" color="inherit" noWrap>
-            Game Idea Generator
-          </Typography>
+          <a href="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <Typography variant="h4" color="inherit" noWrap>
+              Game Idea Generator
+            </Typography>
+          </a>
         </Toolbar>
       </AppBar>
 
@@ -248,7 +257,7 @@ export default function App() {
             </Typography>
             <br />
             <Typography variant="body1">
-              You can click on each tag to randomize it, and fine-tune your game idea!
+              You can click on each tag to randomize it and fine-tune your game idea!
             </Typography>
           </Container>
 
@@ -256,8 +265,8 @@ export default function App() {
       </main>
 
       <footer className={classes.footer}>
-        <Container maxWidth="sm">
-          <Typography variant="body1">My sticky footer can be found here.</Typography>
+        <Container maxWidth="sm" className={classes.footerContainer}>
+          <Typography variant="body1">Made with <FavoriteIcon color="error" /> by <Link href="https://andregamedev.itch.io/">AndreGameDev</Link></Typography>
           <Copyright />
         </Container>
       </footer>
