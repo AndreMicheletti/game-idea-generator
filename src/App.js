@@ -68,8 +68,20 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
+  instructionsBox: {
+    marginTop: 28,
+  },
   slider: {
     width: 200,
+  },
+  theme: {
+    color: '#087b08'
+  },
+  genre: {
+    color: '#e66d52'
+  },
+  mechanic: {
+    color: '#3b28da'
   }
 }))
 
@@ -216,12 +228,27 @@ export default function App() {
             </CardActions>
           </Card>
 
-          <Container maxWidth="sm">
+          <Container maxWidth="sm" className={classes.instructionsBox}>
             <Typography variant="h4">
               How to use?
             </Typography>
+            <Typography variant="body1" style={{ marginTop: 3 }}>
+              You game idea is a combination of three tags: 
+              <span className={classes.theme}> theme</span>, 
+              <span className={classes.mechanic}> mechanics</span> and 
+              <span className={classes.genre}> genre</span>
+            </Typography>
+            <br />
             <Typography variant="body1">
-              <p></p>
+              Select how many <span className={classes.mechanic}> mechanics</span> you'll want, and click 
+              <Typography color="primary" variant="button">
+               {" "} randomize {" "}
+              </Typography>
+               to generate a random set of tags.
+            </Typography>
+            <br />
+            <Typography variant="body1">
+              You can click on each tag to randomize it, and fine-tune your game idea!
             </Typography>
           </Container>
 
