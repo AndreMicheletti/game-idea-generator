@@ -5,6 +5,7 @@ import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import Tooltip from '@material-ui/core/Tooltip'
 
+import { defineMessages, injectIntl } from 'react-intl'
 
 const useStyles = makeStyles((theme) => ({
   tag: {
@@ -20,7 +21,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-export default function RandomTag(props) {
+const translateMessages = defineMessages({})
+
+function RandomTag(props) {
   const classes = useStyles()
 
   const { text, tooltip, color, onClick } = props
@@ -35,3 +38,5 @@ export default function RandomTag(props) {
     </Tooltip>
   )
 }
+
+export default injectIntl(RandomTag)

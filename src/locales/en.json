@@ -1,0 +1,22 @@
+{
+  "app.genre": "Genre",
+  "app.mechanic": "Mechanic",
+  "app.theme": "Theme",
+  "app.genres": "Genres",
+  "app.mechanics": "Mechanics",
+  "app.themes": "Themes",
+  "app.randomize": "Randomize",
+  "app.share": "Share",
+  "app.title": "Game Idea Generator",
+  "app.by": "by",
+  "app.and": "and",
+  "app.madeWith": "Made with",
+  "app.mechanicSlider.label": "How many Mechanics?",
+  "app.gameIdea.title": "What about a",
+  "app.howTo.title": "How to use?",
+  "app.howTo.start": "Select how many",
+  "app.howTo.middle": "you'll want and click",
+  "app.howTo.end": "to generate a random set of tags.",
+  "app.howTo.description": "You game idea is a combination of three tags:",
+  "app.howTo.fineTune": "You can click on each tag to randomize it and fine-tune your game idea!"
+}

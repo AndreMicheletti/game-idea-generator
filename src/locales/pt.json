@@ -1,0 +1,22 @@
+{
+  "app.genre": "Gênero",
+  "app.mechanic": "Mecânica",
+  "app.theme": "Tema",
+  "app.genres": "Gêneros",
+  "app.mechanics": "Mecânicas",
+  "app.themes": "Temas",
+  "app.randomize": "Randomizar",
+  "app.share": "Compartilhar",
+  "app.title": "Gerador de ideias para jogos",
+  "app.by": "por",
+  "app.and": "e",
+  "app.madeWith": "Feito com",
+  "app.mechanicSlider.label": "Quantas Mecânicas?",
+  "app.gameIdea.title": "Que tal um",
+  "app.howTo.title": "Como usar?",
+  "app.howTo.start": "Selecione quantas",
+  "app.howTo.middle": "você quer e pressione",
+  "app.howTo.end": "para gerar uma série aleatória de tags.",
+  "app.howTo.description": "A ideia é feita com três tags:",
+  "app.howTo.fineTune": "Você pode clicar em cada tag para mudá-la e aperfeiçoar sua ideia!"
+}

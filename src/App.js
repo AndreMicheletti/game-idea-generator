@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 
 import queryString from 'query-string'
+import { defineMessages, injectIntl } from 'react-intl'
 
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -47,8 +48,101 @@ import RandomTag from './components/RandomTag'
 import * as data from './data'
 
 import gamepadIcon from './images/gamepad_white.svg'
+import ptIcon from './images/pt.svg'
+import enIcon from './images/en.svg'
 
 const PUBLIC_URL = ''
+
+const translateMessages = defineMessages({
+	genre: {
+		id: 'app.genre',
+		defaultMessage: 'Genre'
+	},
+	mechanic: {
+		id: 'app.mechanic',
+		defaultMessage: 'Mechanic'
+	},
+	theme: {
+		id: 'app.theme',
+		defaultMessage: 'Theme'
+	},
+	genres: {
+		id: 'app.genres',
+		defaultMessage: 'Genres'
+	},
+	mechanics: {
+		id: 'app.mechanics',
+		defaultMessage: 'Mechanics'
+	},
+	themes: {
+		id: 'app.themes',
+		defaultMessage: 'Themes'
+	},
+	randomize: {
+		id: 'app.randomize',
+		defaultMessage: 'Randomize'
+	},
+	share: {
+		id: 'app.share',
+		defaultMessage: 'Share'
+	},
+	title: {
+		id: 'app.title',
+		defaultMessage: 'Game Idea Generator'
+	},
+	by: {
+		id: 'app.by',
+		defaultMessage: 'by'
+	},
+	and: {
+		id: 'app.and',
+		defaultMessage: 'and'
+	},
+	madeWith: {
+		id: 'app.madeWith',
+		defaultMessage: 'Made with'
+	},
+	mechanicSliderLabel: {
+		id: 'app.mechanicSlider.label',
+		defaultMessage: 'How many Mechanics?'
+	},
+	gameIdeaTitle: {
+		id: 'app.gameIdea.title',
+		defaultMessage: 'What about a'
+	},
+	howToFineTune: {
+		id: 'app.howTo.fineTune',
+		defaultMessage: 'You can click on each tag to randomize it and fine-tune your game idea!'
+	},
+	howToEnd: {
+		id: 'app.howTo.end',
+		defaultMessage: 'to generate a random set of tags.'
+	},
+	howToMiddle: {
+		id: 'app.howTo.middle',
+		defaultMessage: 'you\'ll want and click'
+	},
+	howToStart: {
+		id: 'app.howTo.start',
+		defaultMessage: 'Select how many'
+	},
+	howToDescription: {
+		id: 'app.howTo.description',
+		defaultMessage: 'You game idea is a combination of three tags:'
+	},
+	howToTitle: {
+		id: 'app.howTo.title',
+		defaultMessage: 'How to use?'
+	},
+	howToMiddle: {
+		id: 'app.howTo.middle',
+		defaultMessage: 'you\'ll want and click'
+	},
+	howToMiddle: {
+		id: 'app.howTo.middle',
+		defaultMessage: 'you\'ll want and click'
+	},
+})
 
 function Copyright() {
   return (
@@ -84,7 +178,12 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-  },
+	},
+	toolbar: {
+		display: 'flex',
+		flexDirection: 'row',
+		justifyContent: 'center'
+	},
   card: {
     backgroundColor: "#333",
     padding: 30,
@@ -137,7 +236,8 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
-export default function App() {
+function App(props) {
+	const { formatMessage } = props.intl
   const classes = useStyles()
 
   const [genres, setGenre] = React.useState([ data.getRandomGenre() ])
@@ -188,7 +288,6 @@ export default function App() {
     // check url querystring
     try {
       const parsed = queryString.parse(location.search)
-      console.log(parsed)
       if (parsed && parsed.g) {
         const m = !!parsed.m ? parseInt(parsed.m) : 1
         const indexes = parsed.g.split('.')
@@ -218,7 +317,7 @@ export default function App() {
           key={`genre-${index}`}
           text={genre}
           color="#e66d52"
-          tooltip="Genre"
+          tooltip={formatMessage(translateMessages.genre)}
           onClick={() => { setGenre(updArrayOnIndex(genres, index, data.getRandomGenre()))}}
         />
       )
@@ -232,7 +331,7 @@ export default function App() {
           key={`mech-${index}`}
           text={mech}
           color="#3b28da"
-          tooltip="Mechanic"
+          tooltip={formatMessage(translateMessages.mechanic)}
           onClick={() => { setMechanic(updArrayOnIndex(mechanics, index, data.getRandomMechanic()))}}
         />
       )
@@ -246,7 +345,7 @@ export default function App() {
           key={`theme-${index}`}
           text={theme}
           color="#087b08"
-          tooltip="Theme"
+          tooltip={formatMessage(translateMessages.theme)}
           onClick={() => { setTheme(updArrayOnIndex(themes, index, data.getRandomTheme()))}}
         />
       )
@@ -264,19 +363,30 @@ export default function App() {
     <div className={classes.root}>
 
       <AppBar position="relative">
-        <Toolbar>
-          <img src={gamepadIcon} width="100" height="50" />
-          <a href="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-            <Typography variant="h4" color="inherit" noWrap>
-              Game Idea Generator
-            </Typography>
-          </a>
+        <Toolbar className={classes.toolbar}>
+					<div style={{ display: 'flex', flexDirection: 'row', flexShrink: 1, alignItems: 'center' }}>
+						<img src={gamepadIcon} width="100" height="50" />
+						<a href="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+							<Typography variant="h4" color="inherit" noWrap>
+								{formatMessage(translateMessages.title)}
+							</Typography>
+						</a>
+					</div>
+					<div style={{ display: 'flex', flexDirection: 'row', flex: 1, flexGrow: 1, alignItems: 'center', justifyContent: 'flex-end' }}>
+						<Link href="/pt/">
+							<img src={ptIcon} width="35" height="35"/>
+						</Link>
+						<div style={{ width: 10 }}></div>
+						<Link href="/en/">
+							<img src={enIcon} width="35" height="35"/>
+						</Link>
+					</div>
         </Toolbar>
       </AppBar>
 
       <Dialog open={openDialog}>
         <DialogTitle className={classes.dialogRoot}>
-          <Typography component="p" variant="h5">Share</Typography>
+          <Typography component="p" variant="h5">{formatMessage(translateMessages.share)}</Typography>
           <IconButton aria-label="close" className={classes.dialogCloseButton} onClick={handleClose}>
             <CloseIcon />
           </IconButton>
@@ -316,7 +426,7 @@ export default function App() {
           <Box my={4} className={classes.formBox}>
             <div>
               <Typography id="discrete-slider" gutterBottom>
-                How many Mechanics?
+                {formatMessage(translateMessages.mechanicSliderLabel)}
               </Typography>
               <Slider
                 className={classes.slider}
@@ -331,16 +441,15 @@ export default function App() {
               />
             </div>
             <Button variant="contained" color="primary" onClick={() => onRandomize()}>
-              Randomize
+              {formatMessage(translateMessages.randomize)}
             </Button>
           </Box>
-
 
           <Card className={classes.card}>
             <CardHeader
               title={(
                 <Typography variant="h4" style={{ color: 'white' }}>
-                  What about a
+                  {formatMessage(translateMessages.gameIdeaTitle)}
                 </Typography>
               )}
             />
@@ -352,7 +461,7 @@ export default function App() {
               </div>
             </CardContent>
             <CardActions>
-              <Tooltip title="Share" aria-label="share">
+              <Tooltip title={formatMessage(translateMessages.share)} aria-label="share">
                 <IconButton aria-label="share" color="primary" onClick={() => handleOpen()}>
                   <ShareIcon />
                 </IconButton>
@@ -362,25 +471,28 @@ export default function App() {
 
           <Container maxWidth="sm" className={classes.instructionsBox}>
             <Typography variant="h4">
-              How to use?
+							{formatMessage(translateMessages.howToTitle)}
             </Typography>
             <Typography variant="body1" style={{ marginTop: 3 }}>
-              You game idea is a combination of three tags: 
-              <span className={classes.theme}> theme</span>, 
-              <span className={classes.mechanic}> mechanics</span> and 
-              <span className={classes.genre}> genre</span>
+							{formatMessage(translateMessages.howToDescription)}
+              <span className={classes.theme}> {formatMessage(translateMessages.theme)}</span>, 
+              <span className={classes.mechanic}> {formatMessage(translateMessages.mechanics)}</span> {formatMessage(translateMessages.and)} 
+              <span className={classes.genre}> {formatMessage(translateMessages.genre)}</span>
             </Typography>
             <br />
             <Typography variant="body1">
-              Select how many <span className={classes.mechanic}> mechanics</span> you'll want, and click 
+              
+							{formatMessage(translateMessages.howToStart)} <span className={classes.mechanic}>{" "}{formatMessage(translateMessages.mechanics)}</span> 
+							{" "} {formatMessage(translateMessages.howToMiddle)}
               <Typography color="primary" variant="button">
-               {" "} randomize {" "}
+               {" "} {formatMessage(translateMessages.randomize)} {" "}
               </Typography>
-               to generate a random set of tags.
+							{formatMessage(translateMessages.howToEnd)}
+               
             </Typography>
             <br />
             <Typography variant="body1">
-              You can click on each tag to randomize it and fine-tune your game idea!
+							{formatMessage(translateMessages.howToFineTune)}
             </Typography>
           </Container>
 
@@ -389,7 +501,12 @@ export default function App() {
 
       <footer className={classes.footer}>
         <Container maxWidth="sm" className={classes.footerContainer}>
-          <Typography variant="body1">Made with <FavoriteIcon color="error" /> by <Link href="https://andregamedev.itch.io/">AndreGameDev</Link></Typography>
+          <Typography variant="body1">
+						{formatMessage(translateMessages.madeWith)}
+						<FavoriteIcon color="error" />
+						{formatMessage(translateMessages.by)}
+						<Link href="https://andregamedev.itch.io/">{" "}AndreGameDev</Link>
+					</Typography>
           <Copyright />
         </Container>
       </footer>
@@ -397,3 +514,5 @@ export default function App() {
     </div>
   )
 }
+
+export default injectIntl(App)

@@ -18,6 +18,7 @@
     "query-string": "^6.13.6",
     "react": "latest",
     "react-dom": "latest",
+    "react-intl": "^5.8.8",
     "react-scripts": "latest",
     "react-share": "^4.3.1"
   },
