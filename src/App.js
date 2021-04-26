@@ -232,6 +232,9 @@ const useStyles = makeStyles((theme) => ({
   dialogTextBox: {
     padding: 8,
     backgroundColor: '#e8e8e8'
+  },
+  clickable: {
+    cursor: 'pointer'
   }
 }))
 
@@ -352,6 +355,11 @@ function App(props) {
     })
   }
 
+  const changeLang = (toLang) => {
+    sessionStorage.setItem('lang', toLang)
+    document.location.reload()
+  }
+
   const protocol = 'https'
   const githubName = 'andremicheletti'
   const repoName = 'game-idea-generator'
@@ -373,13 +381,13 @@ function App(props) {
 						</a>
 					</div>
 					<div style={{ display: 'flex', flexDirection: 'row', flex: 1, flexGrow: 1, alignItems: 'center', justifyContent: 'flex-end' }}>
-						<Link href="/pt/">
+						<div className={classes.clickable} onClick={() => changeLang('pt')}>
 							<img src={ptIcon} width="35" height="35"/>
-						</Link>
+						</div>
 						<div style={{ width: 10 }}></div>
-						<Link href="/en/">
+						<div className={classes.clickable} onClick={() => changeLang('en')}>
 							<img src={enIcon} width="35" height="35"/>
-						</Link>
+						</div>
 					</div>
         </Toolbar>
       </AppBar>

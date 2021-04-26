@@ -11,15 +11,8 @@ Array.prototype.random = function () {
   return this[Math.floor((Math.random()*this.length))];
 }
 
-let language;
-try {
-	language = location.pathname.replace(/\//g, '')
-	if (!language) {
-		throw 'opa'
-	}
-} catch (e) {
-	language = 'en'
-}
+let language = sessionStorage.getItem('lang');
+if (!language) language = "pt"
 let messages = require(`./locales/${language}.json`);
 
 ReactDOM.render(
