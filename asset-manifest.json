@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.js": "/game-idea-generator/static/js/main.fc95af26.chunk.js",
-    "main.js.map": "/game-idea-generator/static/js/main.fc95af26.chunk.js.map",
-    "runtime-main.js": "/game-idea-generator/static/js/runtime-main.54fc7bf8.js",
-    "runtime-main.js.map": "/game-idea-generator/static/js/runtime-main.54fc7bf8.js.map",
-    "static/js/2.b2a8bc33.chunk.js": "/game-idea-generator/static/js/2.b2a8bc33.chunk.js",
-    "static/js/2.b2a8bc33.chunk.js.map": "/game-idea-generator/static/js/2.b2a8bc33.chunk.js.map",
+    "main.js": "/game-idea-generator/static/js/main.6fd195cb.chunk.js",
+    "main.js.map": "/game-idea-generator/static/js/main.6fd195cb.chunk.js.map",
+    "runtime-main.js": "/game-idea-generator/static/js/runtime-main.8571f80b.js",
+    "runtime-main.js.map": "/game-idea-generator/static/js/runtime-main.8571f80b.js.map",
+    "static/js/2.b4e9f1c2.chunk.js": "/game-idea-generator/static/js/2.b4e9f1c2.chunk.js",
+    "static/js/2.b4e9f1c2.chunk.js.map": "/game-idea-generator/static/js/2.b4e9f1c2.chunk.js.map",
     "index.html": "/game-idea-generator/index.html",
-    "static/js/2.b2a8bc33.chunk.js.LICENSE.txt": "/game-idea-generator/static/js/2.b2a8bc33.chunk.js.LICENSE.txt",
+    "static/js/2.b4e9f1c2.chunk.js.LICENSE.txt": "/game-idea-generator/static/js/2.b4e9f1c2.chunk.js.LICENSE.txt",
     "static/media/en.ce709bf8.svg": "/game-idea-generator/static/media/en.ce709bf8.svg",
     "static/media/gamepad_white.be479900.svg": "/game-idea-generator/static/media/gamepad_white.be479900.svg",
     "static/media/pt.17f97f51.svg": "/game-idea-generator/static/media/pt.17f97f51.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.54fc7bf8.js",
-    "static/js/2.b2a8bc33.chunk.js",
-    "static/js/main.fc95af26.chunk.js"
+    "static/js/runtime-main.8571f80b.js",
+    "static/js/2.b4e9f1c2.chunk.js",
+    "static/js/main.6fd195cb.chunk.js"
   ]
 }
